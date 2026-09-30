@@ -1,0 +1,75 @@
+class ModelBasedVacuumAgent:
+
+    def __init__(self):
+       
+        self.state = {
+            "A": "Unknown",
+            "B": "Unknown"
+        }
+
+      
+        self.rules = {
+            ("Dirty", "A"): "Suck",
+            ("Dirty", "B"): "Suck",
+            ("Clean", "A"): "Right",
+            ("Clean", "B"): "Left"
+        }
+
+      
+        self.action = None
+
+   
+    def update_state(self, location, status):
+        self.state[location] = status
+
+    
+    def rule_match(self, location, status):
+        return self.rules.get((status, location), "NoOp")
+
+    
+    def agent(self, location, status):
+
+       
+        self.update_state(location, status)
+
+     
+        self.action = self.rule_match(location, status)
+
+        return self.action
+
+
+
+vacuum = ModelBasedVacuumAgent()
+
+print("=== MODEL-BASED REFLEX VACUUM CLEANER ===")
+
+while True:
+
+    
+    location = input("\nEnter room (A/B): ").upper()
+
+    if location not in ["A", "B"]:
+        print("Invalid room! Enter A or B.")
+        continue
+
+    status = input("Enter room status (Dirty/Clean): ").capitalize()
+
+    if status not in ["Dirty", "Clean"]:
+        print("Invalid status! Enter Dirty or Clean.")
+        continue
+
+  
+    action = vacuum.agent(location, status)
+
+    print("\nCurrent State:", vacuum.state)
+    print("Percept:", location, status)
+    print("Action:", action)
+
+
+    choice = input("\nDo you want to continue? (yes/no): ").lower()
+
+    if choice != "yes":
+        break
+
+print("\nFinal State:", vacuum.state)
+print("Program terminated.")
