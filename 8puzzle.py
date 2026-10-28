@@ -1,8 +1,4 @@
-# 8 Puzzle using Iterative Deepening Search (IDS)
-# 0 represents the blank space
 
-
-# Generate possible positions of blank space
 def get_moves(state):
 
     zero = state.index(0)
@@ -12,26 +8,25 @@ def get_moves(state):
 
     moves = []
 
-    # Move Up
+  
     if row > 0:
         moves.append(zero - 3)
 
-    # Move Down
+  
     if row < 2:
         moves.append(zero + 3)
 
-    # Move Left
+  
     if col > 0:
         moves.append(zero - 1)
 
-    # Move Right
+
     if col < 2:
         moves.append(zero + 1)
 
     return moves
 
 
-# Move blank space
 def make_move(state, new_zero):
 
     zero = state.index(0)
@@ -44,23 +39,23 @@ def make_move(state, new_zero):
     return tuple(new_state)
 
 
-# Depth Limited DFS
+
 def depth_limited_dfs(state, goal, depth, path):
 
-    # Goal found
+
     if state == goal:
         return path
 
-    # Depth limit reached
+  
     if depth == 0:
         return None
 
-    # Try all possible moves
+  
     for new_zero in get_moves(state):
 
         new_state = make_move(state, new_zero)
 
-        # Avoid states already present in current path
+      
         if new_state not in path:
 
             result = depth_limited_dfs(
@@ -76,7 +71,7 @@ def depth_limited_dfs(state, goal, depth, path):
     return None
 
 
-# Iterative Deepening Search
+
 def ids(start, goal, max_depth):
 
     for depth in range(max_depth + 1):
@@ -96,7 +91,7 @@ def ids(start, goal, max_depth):
     return None
 
 
-# Display solution
+
 def display_solution(solution):
 
     if solution is None:
@@ -115,9 +110,6 @@ def display_solution(solution):
         print(state[6], state[7], state[8])
 
 
-# -----------------------------------------
-# MAIN PROGRAM
-# -----------------------------------------
 
 print("================================")
 print("     8 PUZZLE USING IDS")
@@ -141,7 +133,7 @@ max_depth = int(
 )
 
 
-# Run IDS
+
 solution = ids(
     start,
     goal,
@@ -149,5 +141,4 @@ solution = ids(
 )
 
 
-# Display result
 display_solution(solution)
